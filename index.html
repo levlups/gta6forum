@@ -1,1 +1,215 @@
-welcome to gta6 world 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>GTA VI — Q&A (from GTAVice.net)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #0f1620;
+      --ink: #e9eef5;
+      --muted: #9fb0c0;
+      --accent: #3bd37f;
+      --accent2: #6ad1ff;
+      --ring: #2a394a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, Ubuntu, Cantarell, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1000px 600px at 10% -10%, #0f1b28 0%, var(--bg) 60%) fixed;
+      color: var(--ink);
+    }
+    header {
+      padding: 32px 16px 10px; text-align: center;
+    }
+    h1 { margin: 0 0 8px; font-size: 28px; letter-spacing: .3px; }
+    .sub { color: var(--muted); font-size: 14px; }
+    .container { max-width: 900px; margin: 24px auto 80px; padding: 0 16px; }
+    .search {
+      position: sticky; top: 0; background: linear-gradient(180deg, rgba(11,15,20,.98), rgba(11,15,20,.85));
+      backdrop-filter: blur(6px); padding: 12px 16px; z-index: 10; border-bottom: 1px solid var(--ring);
+    }
+    .search input {
+      width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--ring);
+      background: #0f1822; color: var(--ink); outline: none; font-size: 16px;
+    }
+    .search input:focus { border-color: var(--accent2); box-shadow: 0 0 0 3px rgba(106, 209, 255, .2); }
+    .qa-list { display: grid; gap: 12px; margin-top: 16px; }
+    .qa {
+      border: 1px solid var(--ring); border-radius: 14px; background: linear-gradient(180deg, var(--card), #0e141c);
+      overflow: hidden;
+    }
+    .qa summary {
+      list-style: none; cursor: pointer; display: flex; align-items: start; gap: 12px;
+      padding: 14px 16px; font-weight: 600; position: relative;
+    }
+    .qa summary::-webkit-details-marker { display: none; }
+    .q-icon {
+      width: 22px; height: 22px; border-radius: 999px; background: var(--accent);
+      display: inline-grid; place-items: center; color: #07140c; font-weight: 800; font-size: 14px;
+      flex: 0 0 22px; margin-top: 2px;
+    }
+    .qa[open] summary { border-bottom: 1px solid var(--ring); }
+    .answer { padding: 14px 16px; color: var(--ink); line-height: 1.6; font-size: 15px; }
+    .meta {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; color: var(--muted); font-size: 13px;
+    }
+    .pill {
+      border: 1px solid var(--ring); padding: 4px 8px; border-radius: 999px; display: inline-flex; gap: 6px; align-items: center;
+    }
+    footer { color: var(--muted); text-align: center; padding: 24px 16px 48px; }
+    a { color: var(--accent2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .hidden { display: none !important; }
+    .badge {
+      display: inline-block; padding: 2px 8px; border-radius: 999px; background: #122536; color: var(--accent2);
+      border: 1px solid var(--ring); font-size: 12px; margin-left: 6px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>GTA VI — Questions & Answers</h1>
+    <div class="sub">
+      Curated from <strong>GTAVice.net</strong> (fan site). Each answer summarizes their FAQ wording.
+      <span class="badge">Read-only</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="search">
+      <input id="filter" placeholder="Search questions (e.g., release date, platforms, Vice City)…" aria-label="Search Q&A" />
+    </div>
+
+    <div id="qaList" class="qa-list" role="list"></div>
+
+    <footer>
+      Source: <a href="https://www.gtavice.net/faqs" target="_blank" rel="noopener">GTAVice.net — GTA VI FAQs</a>.
+      This page paraphrases their answers and links back for details.
+    </footer>
+  </div>
+
+  <script>
+    // Q&A data (paraphrased from GTAVice.net FAQs / info pages)
+    const QA = [
+      {
+        q: "When is GTA VI scheduled to release?",
+        a: "Rockstar’s official date listed by GTAVice.net is May 26, 2026.",
+        tags: ["release", "date", "timeline"],
+        src: "https://www.gtavice.net/faqs"
+      },
+      {
+        q: "What’s the official title of the next Grand Theft Auto?",
+        a: "It’s called Grand Theft Auto VI (often shortened to GTA VI or GTA 6).",
+        tags: ["title", "name"],
+        src: "https://www.gtavice.net/faqs"
+      },
+      {
+        q: "Where does GTA VI take place?",
+        a: "In the state of Leonida—Rockstar’s Florida analogue—including Vice City (their take on Miami).",
+        tags: ["setting", "map", "vice city", "leonida"],
+        src: "https://www.gtavice.net/faqs"
+      },
+      {
+        q: "What time period does GTA VI use?",
+        a: "Modern day—set after the events of GTA V (2013).",
+        tags: ["era", "time", "modern"],
+        src: "https://www.gtavice.net/faqs"
+      },
+      {
+        q: "Which platforms does GTA VI launch on?",
+        a: "Current-gen consoles only at launch: PlayStation 5 and Xbox Series X|S. A PC version hasn’t been announced yet but is considered likely after consoles.",
+        tags: ["platforms", "ps5", "xbox", "pc"],
+        src: "https://www.gtavice.net/faqs"
+      },
+      {
+        q: "When did Rockstar announce GTA VI?",
+        a: "They confirmed active development on Feb 4, 2022, and formally revealed the title with the first trailer on Dec 4, 2023 (pushed a day early due to a leak).",
+        tags: ["announcement", "trailer", "timeline"],
+        src: "https://www.gtavice.net/faqs"
+      },
+      {
+        q: "When did the big development leak happen?",
+        a: "September 18, 2022—numerous in-progress videos surfaced; Rockstar verified the leak the next day.",
+        tags: ["leak", "development"],
+        src: "https://www.gtavice.net/faqs"
+      },
+      {
+        q: "Do we know the voice actors for Lucia and Jason?",
+        a: "Not confirmed. GTAVice.net notes ongoing speculation; names like Manni L. Perez (Lucia) and even Troy Baker (Jason) have been rumored, but nothing official.",
+        tags: ["cast", "voice", "lucia", "jason", "rumor"],
+        src: "https://www.gtavice.net/faqs"
+      },
+      {
+        q: "How much will GTA VI cost?",
+        a: "Pricing isn’t confirmed. The FAQ estimates a standard edition around the going AAA rate at launch (historically listed near $59.99/£59.99/€74.99), pending official details.",
+        tags: ["price", "cost"],
+        src: "https://www.gtavice.net/faqs"
+      },
+      {
+        q: "What age rating will it have?",
+        a: "Not rated yet. Prior GTA entries were Mature/18+ in most regions, and GTAVice.net expects something along those lines.",
+        tags: ["rating", "esrb", "pegi", "mature"],
+        src: "https://www.gtavice.net/faqs"
+      }
+    ];
+
+    // Render
+    const list = document.getElementById("qaList");
+    function render(items) {
+      list.innerHTML = "";
+      if (!items.length) {
+        const empty = document.createElement("div");
+        empty.className = "sub";
+        empty.textContent = "No matching questions. Try different keywords.";
+        list.appendChild(empty);
+        return;
+      }
+      items.forEach(({ q, a, tags, src }) => {
+        const el = document.createElement("details");
+        el.className = "qa";
+        const sum = document.createElement("summary");
+        const icon = document.createElement("span");
+        icon.className = "q-icon";
+        icon.textContent = "Q";
+        const text = document.createElement("div");
+        text.textContent = q;
+        sum.appendChild(icon);
+        sum.appendChild(text);
+
+        const ans = document.createElement("div");
+        ans.className = "answer";
+        ans.innerHTML = `
+          <div>${a}</div>
+          <div class="meta">
+            <span class="pill" title="Tags">${tags.map(t=>`#${t}`).join(" ")}</span>
+            <a class="pill" href="${src}" target="_blank" rel="noopener">View on GTAVice.net</a>
+          </div>
+        `;
+        el.appendChild(sum);
+        el.appendChild(ans);
+        list.appendChild(el);
+      });
+    }
+
+    render(QA);
+
+    // Filter
+    const input = document.getElementById("filter");
+    input.addEventListener("input", e => {
+      const q = e.target.value.trim().toLowerCase();
+      const filtered = !q ? QA : QA.filter(item =>
+        (item.q + " " + item.a + " " + item.tags.join(" ")).toLowerCase().includes(q)
+      );
+      render(filtered);
+    });
+
+    // Open the first item for quick context
+    if (list.firstElementChild?.tagName === "DETAILS") {
+      list.firstElementChild.setAttribute("open", "");
+    }
+  </script>
+</body>
+</html>
+
